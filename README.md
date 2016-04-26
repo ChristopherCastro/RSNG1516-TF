@@ -13,7 +13,7 @@ que en total un servidor de N hilos enviara C*N Mbps si tiene todos los hilos
 ocupados enviando. El servidor sólo puede mantener un pequeño número q de peticiones
 esperando si tiene todos los hilos ocupados. De hecho esto se puede configurar a q=0
 y que no deje esperar a ninguno, Por tanto el sistema de una máquina servidora es un
-`G/G/N/N+q`` Las llegadas no sabemos como van a ser aunque supondremos que de
+`G/G/N/N+q` Las llegadas no sabemos como van a ser aunque supondremos que de
 Poisson y tendremos un `M/G/N/N+q` La máquina básica del servidor es una máquina
 virtual que se puede instanciar más de una vez. Cada maquina puede acceder al SAN
 donde se guardan los videos a gran velocidad por lo que el cuello de botella es la
@@ -113,12 +113,13 @@ salida indicando en cada linea el resultado de una petición con el siguiente fo
 
 `tllegada idllegada tservicio servida tservidor tfin`
 
-- tllegada, idllegada y tservicio son los mismos que tenía esa llegada en el anterior
-- servida, indica 1 si el video paso a un hilo de servidor para ser servido y 0 si
+- **tllegada, idllegada y tservicio**, son los mismos que tenía esa llegada en el
+  anterior
+- **servida**, indica 1 si el video paso a un hilo de servidor para ser servido y 0 si
   fue rechazada porque al llegar no habia sitio en el sistema
-- tservidor, indica en que tiempo absoluto la petición fue asignada a un hilo para
+- **tservidor**, indica en que tiempo absoluto la petición fue asignada a un hilo para
   ser servida
-- tfin, indica en que tiempo absoluto la petición terminó de ser enviada y dejo
+- **tfin**, indica en que tiempo absoluto la petición terminó de ser enviada y dejo
   libre el hilo del servidor
 
 
