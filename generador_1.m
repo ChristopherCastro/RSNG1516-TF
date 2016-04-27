@@ -4,7 +4,7 @@ function [events] = generador_1(lambda, tmedio, nmax)
 
     emptyEvent = event('L', 0, 0, 0);
     events(1:nmax) = emptyEvent;
-    arrivals = exprnd(lambda, [1 nmax]);
+    arrivals = exprnd(1/lambda, [1 nmax]);
 
     events(1).idllegada = 1;
     events(1).tllegada = arrivals(1);
