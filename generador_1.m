@@ -1,7 +1,12 @@
-function [events] = generador_1(lambda, tmedio, nmax)
+function [events] = generador_1(lambda, tmedio, nmax, seed)
     %Genera nmax llegadas con tiempos entre llegadas exponenciales y una 
     %tasa de lambda llegadas por segundo y tiempos de servicio exponenciales con media tmedio.
 
+    rng(seed)
+    if nargin<4
+        seed = 3454645;
+    end
+    
     emptyEvent = event('L', 0, 0, 0);
     events(1:nmax) = emptyEvent;
     arrivals = exprnd(1/lambda, [1 nmax]);
