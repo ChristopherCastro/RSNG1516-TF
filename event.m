@@ -1,4 +1,6 @@
-function [e] = event(tipo, idllegada, tllegada, tservicio)
+function [e] = event(tipo, idllegada, tllegada, tservicio, fServida, tServidor, tFin)
+	% añadidos argumentos de los eventos de salida pra no tener que crear dos tipos de evento
+	% se ha modificado el constructor de generador_1 y generador_2
     if strcmp(tipo, 'L') == 0 && strcmp(tipo, 'S') == 0
         exp = MException('event:WRONG_ARG', 'Invalid type of event, allowed values are: "L" or "S"');
         throw(exp);
@@ -9,6 +11,7 @@ function [e] = event(tipo, idllegada, tllegada, tservicio)
         throw(exp);
     end;
 
-    e = struct('tipo', tipo, 'idllegada', idllegada, 'tllegada', tllegada, 'tservicio', tservicio);
+    e = struct('tipo', tipo, 'idllegada', idllegada, 'tllegada', tllegada, 'tservicio', tservicio, 'fServida', fServida, 'tServidor', tServidor, 'tFin', tFin);
+
 end
 
