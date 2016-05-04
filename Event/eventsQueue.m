@@ -45,8 +45,17 @@ classdef eventsQueue < handle
         % # Retorno:
         %
         % El primer elemento de la cola
-        function [h] = first(obj)
-            h = obj.queue(1);
+        function [f] = first(obj)
+            f = obj.queue(1);
+        end;
+        
+        % Consula el último elemento de la cola sin quitarlo de la misma.
+        %
+        % # Retorno:
+        %
+        % El último elemento de la cola
+        function [l] = last(obj)
+            l = obj.queue(end);
         end;
         
         % Inserta un nuevo evento al final de la cola.
