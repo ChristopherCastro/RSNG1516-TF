@@ -48,6 +48,15 @@ classdef eventsQueue < handle
         function [h] = first(obj)
             h = obj.queue(1);
         end;
+        
+        % Inserta un nuevo evento al final de la cola.
+        %
+        % # Argumentos
+        %
+        % {event}: Un nuevo evento
+        function push(obj, event)
+            obj.queue(end + 1) = event;
+        end;
     end
 end
 
