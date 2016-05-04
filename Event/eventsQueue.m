@@ -37,6 +37,15 @@ classdef eventsQueue < handle
         function [e] = isEmpty(obj)
             e = isempty(obj.queue);
         end;
+
+        % Consula el primer elemento de la cola sin quitarlo de la misma.
+        %
+        % # Retorno:
+        %
+        % El primer elemento de la cola
+        function [h] = first(obj)
+            h = obj.queue(1);
+        end;
     end
 end
 
