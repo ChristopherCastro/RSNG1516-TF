@@ -1,7 +1,7 @@
 function [events] = generador_1(lambda, tmedio, nmax, seed)
     %Genera nmax llegadas con tiempos entre llegadas exponenciales y una 
     %tasa de lambda llegadas por segundo y tiempos de servicio exponenciales con media tmedio.
-
+    
     if nargin == 4
         rng(seed);
     end
