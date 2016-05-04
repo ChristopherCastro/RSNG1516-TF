@@ -4,6 +4,12 @@ classdef eventsQueue < handle
     end
 
     methods
+        % Constructor
+        %
+        function obj = eventsQueue(q)
+            obj.queue = q;
+        end;
+
         % Inicializa la cola.
         %
         % # Entradas:
