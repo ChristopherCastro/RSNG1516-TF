@@ -1,4 +1,6 @@
-function [salidaSimulador] = simulador(nHilos, Qmax, eventos)
+% Simulador básico con un único servidor y múltiples hilos.
+%
+function [salidaSimulador] = simpleSimulator(nHilos, Qmax, eventos)
     % nHilos == N
     % Qmax
     % Suponemos que el video está codificado para una velocidad de datos C y que dura un minuto en ser enviado a velocidad C.
