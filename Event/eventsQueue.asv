@@ -22,15 +22,11 @@ classdef eventsQueue < handle
             obj.queue(1) = [];
         end;
         
-        % Retorna el número de elementos en la cola.
-        %
-        % # Retorno
-        %
-        % Un entero mayor o igual a cero
+        % Retorna el número de elementos en
         function [c] = count(obj)
             c = length(obj.queue);
         end;
-
+        
         % Verifica si la cola esta vacía o no.
         %
         % # Retorno:
