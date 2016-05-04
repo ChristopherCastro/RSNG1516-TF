@@ -6,7 +6,7 @@ function [events] = generador_1(lambda, tmedio, nmax, seed)
         rng(seed);
     end
     
-    emptyEvent = event('L', 0, 0, 0, 0, Inf, Inf);
+    emptyEvent = event('L', 0, 0,0, [], [], []);
     events(1:nmax) = emptyEvent;
     arrivals = exprnd(1/lambda, [1 nmax]);
 
