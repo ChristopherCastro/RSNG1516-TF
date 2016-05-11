@@ -61,13 +61,6 @@ classdef eventsQueue < handle
         function [e] = hasNext(obj)
             e = obj.head <= length(obj.queue);
         end;
-        
-        % Retorna el elemento apuntado por la cabeza PERO sin avanzar la
-        % posición de la misma.
-        %
-        function [e] = current(obj)
-            e = obj.queue(obj.head);
-        end;
 
         % Consula el primer elemento de la cola sin quitarlo ni avanzar la
         % cabezade la misma.
@@ -76,7 +69,7 @@ classdef eventsQueue < handle
         %
         % El primer elemento de la cola
         function [f] = first(obj)
-            f = obj.queue(1);
+            f = obj.queue(obj.head);
         end;
         
         % Consula el último elemento de la cola sin quitarlo ni alterar la
