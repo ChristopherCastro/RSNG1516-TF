@@ -13,7 +13,17 @@ classdef Threads < handler
             end;   
             obj.queueLen = queueLen;
         end;
+        
+        function [e] = getEvent(obj)
+            e = obj.queues(1).first();
+
+            for q = 2:length(obj.queues)
+                c = obj.queues(q).first();
+                if c.tllegada < e.tllegada
+                    e = c;
+                end;
+            end;
+        end;
     end
-    
 end
 
