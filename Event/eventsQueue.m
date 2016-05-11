@@ -1,14 +1,4 @@
-% A simple and generic queue manager.
-%
-% # Usage:
-%
-% ```matlab
-%  queue = new eventsQueue(listOfEvents);
-%  while queue.hasNext()
-%      event = queue.next();
-%      % do nifty things with {event}
-%  end;
-% ```
+
 classdef eventsQueue < handle
     properties
         queue = [];
@@ -49,7 +39,7 @@ classdef eventsQueue < handle
         %
         % Un entero mayor o igual a cero
         function [c] = size(obj)
-            c = length(obj.queue) - obj.head - 1;
+            c = length(obj.queue) - (obj.head - 1);
         end;
 
         % Verifica si hay más elementos en la cola o no.

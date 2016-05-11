@@ -11,7 +11,7 @@ function [salidaSimulador] = simpleSimulator(nHilos, Qmax, lQueue)
     while(~lQuenue.isEmpty() || ~sQuenue.isEmpty())
         e = getEvent(lQueue, sQueue);
         if(e.tipo == 'L')
-            if ((sQuenue.last - sQuenue.first)< nHilos)
+            if (sQuenue.size()< nHilos)
                 e.tllegada =  e.tllegada + sQuenue.last.tllegada;
                 sQuenue.push(e);
             end
@@ -28,17 +28,17 @@ function e = getEvent(lQueue, sQueue)
     l = struct('tllegada', inf);
     s = l;    
     
-    if(~lQuenue.isEmpty() )
+    if(lQuenue.hasNext() )
         l = lQuenue.first();
     end
-    if(~sQuenue.isEmpty() )
+    if(sQuenue.hasNext() )
         s = lQuenue.first();
     end
     
     if (l.tllegada < s.tllegada)
-        e = lQueue.pop();
+        e = lQueue.next();
         
     else
-        e = sQueue.pop();
+        e = sQueue.next();
     end    
 end
