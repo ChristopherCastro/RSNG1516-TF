@@ -11,11 +11,13 @@ function [salidaSimulador] = simpleSimulator(nHilos, Qmax, lQueue)
     while(~lQuenue.isEmpty() || ~sQuenue.isEmpty())
         e = getEvent(lQueue, sQueue);
         if(e.tipo == 'L')
-            if (sQuenue.count() < nHilos)
-                sQuenue.
+            if ((sQuenue.last - sQuenue.first)< nHilos)
+                e.tllegada =  e.tllegada + sQuenue.last.tllegada;
                 sQuenue.push(e);
             end
         else
+            % tratar peticion
+            % avanzamos la posicion del indice sQuenue.first+1
         end
     end
 
