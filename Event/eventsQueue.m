@@ -48,7 +48,7 @@ classdef eventsQueue < handle
         % # Retorno
         %
         % Un entero mayor o igual a cero
-        function [c] = count(obj)
+        function [c] = size(obj)
             c = length(obj.queue) - obj.head - 1;
         end;
 
@@ -60,6 +60,13 @@ classdef eventsQueue < handle
         % - 0: En otro caso.
         function [e] = hasNext(obj)
             e = obj.head <= length(obj.queue);
+        end;
+        
+        % Retorna el elemento apuntado por la cabeza PERO sin avanzar la
+        % posición de la misma.
+        %
+        function [e] = current(obj)
+            e = obj.queue(obj.head);
         end;
 
         % Consula el primer elemento de la cola sin quitarlo ni avanzar la
