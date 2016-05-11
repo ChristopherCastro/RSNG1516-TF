@@ -6,18 +6,28 @@ function [salidaSimulador] = simpleSimulator(nHilos, Qmax, lQueue)
     % Suponemos que el video está codificado para una velocidad de datos C y que dura un minuto en ser enviado a velocidad C.
     N = nHilos;
     nmax=length(lQueue);
-    sQueue = eventsQueue();
+    queues = [lQueue];
     
-    while(~lQuenue.isEmpty() || ~sQuenue.isEmpty())
+    for i = 1:nHilos
+        queues(end + 1) = eventsQueue();
+    end;
+    
+    while(lQuenue.isEmpty() || ~sQuenue.isEmpty())
         e = getEvent(lQueue, sQueue);
+        
         if(e.tipo == 'L')
             if (sQuenue.size() < nHilos)
-                e.tllegada =  e.tllegada + sQuenue.last.tllegada;
+                e.tipo = 'S';
+                e.tllegada =  sQuenue.last().tServidor;
                 sQuenue.add(e);
+            else
+                wQuenue.add(e);
             end
-        else
+        else if(e.tipo == 'S')
             % tratar peticion
-            e.fServida = 1;
+            % e.fServida = 1; 
+            % e.tServidor = e.tllegada + e.tservicio;
+            sQuenue.next();
             % avanzamos la posicion del indice sQuenue.first+1
         end
     end
@@ -25,21 +35,15 @@ function [salidaSimulador] = simpleSimulator(nHilos, Qmax, lQueue)
    
 end
 
-function e = getEvent(lQueue, sQueue)
-    l = struct('tllegada', inf);
-    s = l;    
+function [e,Q] = getEvent([lQueue sQueues])
+    e = lQueue.first();
+    Q = 0;
     
-    if(lQuenue.hasNext() )
-        l = lQuenue.first();
-    end
-    if(sQuenue.hasNext() )
-        s = lQuenue.first();
-    end
-    
-    if (l.tllegada < s.tllegada)
-        e = lQueue.next();
-        
-    else
-        e = sQueue.next();
-    end    
+    for q = 1:length(sQueues)
+        c = sQueues(q).first();
+        if c.tllegada < e.tllegada
+            e = c;
+            Q = q;
+        end;
+    end;    
 end
