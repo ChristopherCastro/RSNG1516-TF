@@ -1,4 +1,3 @@
-
 classdef eventsQueue < handle
     properties
         queue = [];
@@ -12,6 +11,11 @@ classdef eventsQueue < handle
             if nargin == 1
                 obj.queue = q;
             end;
+        end;
+        
+        % Avanza en una posición la cabeza de esta cola.
+        function [] = moveHead(obj)
+            obj.head = obj.head + 1;
         end;
         
         % Establece la cabeza de la cola a una posición arbitraria.
@@ -78,7 +82,7 @@ classdef eventsQueue < handle
         %
         % - {event}: Un nuevo evento
         function add(obj, event)
-            obj.queue(end + 1) = event;
+            obj.queue = [obj.queue event];
         end;
     end
 end
