@@ -5,6 +5,9 @@ classdef Threads < handle
         
         % Wait queue length
         wqLen = 1;
+        
+        % Unhandled events due to overbooking
+        unhandled = [];
     end
     
     methods
@@ -19,6 +22,7 @@ classdef Threads < handle
 
         function [e, qIdx] = getEvent(obj)
             e = struct('tllegada', inf);
+            qIdx = -1;
 
             for q = 1:length(obj.queues)
                 if obj.queues{q}.size() > 0
@@ -44,24 +48,28 @@ classdef Threads < handle
         end;
         
         function [] = handle(obj, lEvent)
-            lEvent.tipo = 'S';
-            tllegada = lEvent.tllegada;
-            qIdx = 1;
-            
-            for q = 1:length(obj.queues)
-                queue = obj.queues{q};
+            if ~obj.isServerFull()
+                lEvent.tipo = 'S';
+                tllegada = lEvent.tllegada;
+                qIdx = 1;
 
-                if queue.size() == 0
-                    qIdx = q;
-                    break;
-                elseif queue.last().tllegada < tllegada
-                    tllegada = queue.last().tllegada;
-                    qIdx = q;
+                for q = 1:length(obj.queues)
+                    queue = obj.queues{q};
+
+                    if queue.size() == 0
+                        qIdx = q;
+                        break;
+                    elseif queue.last().tllegada < tllegada
+                        tllegada = queue.last().tllegada;
+                        qIdx = q;
+                    end;
                 end;
-            end;
 
-            lEvent.tllegada = lEvent.tservicio + tllegada;
-            obj.queues{qIdx}.add(lEvent);
+                lEvent.tllegada = lEvent.tservicio + tllegada;
+                obj.queues{qIdx}.add(lEvent);
+            else
+                obj.unhandled = [obj.unhandled lEvent];
+            end;
         end;
 
         function [] = moveHead(obj, qIdx)
