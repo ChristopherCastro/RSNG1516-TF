@@ -1,19 +1,18 @@
 % Simulador básico con un único servidor y múltiples hilos.
 %
-function [threads,peticiones_rechazadas] = simpleSimulator(nHilos, waitQueueLen, lQueue)
-    peticiones_rechazadas = 0;
+function [threads] = simpleSimulator(nHilos, waitQueueLen, lQueue)
     threads = Threads(nHilos, waitQueueLen);
     
     while (lQueue.hasNext() || threads.hasNext())
         [e, qIdx] = getEvent(lQueue, threads);
-        
+        disp(threads.toString());
+
         if e.tipo == 'L'
             if ~threads.isServerFull()
                 threads.handle(e);
             else
                 % No se puede atender -> rechazar
-            % ya cambiaremos el nombre de la variable al ingles
-                peticiones_rechazadas = peticiones_rechazadas + 1;
+                % ya cambiaremos el nombre de la variable al ingles
             end;
         elseif e.tipo == 'S'
             threads.moveHead(qIdx);

@@ -84,6 +84,29 @@ classdef Threads < handle
 
             i = (s - length(obj.queues)) >= obj.wqLen;
         end;
+        
+        % Retorna una representción tipo texto de los hilos
+        function [out] = toString(obj)
+            s = 0;
+            for q = 1:length(obj.queues)
+                s = s + obj.queues{q}.size();
+            end;
+            
+            used = (s - length(obj.queues));
+            notUsed = obj.wqLen - (s - length(obj.queues));
+            waitQueueUsedSlot = '';
+            waitQueueEmptySlot = '';
+
+            if used > 0
+                waitQueueUsedSlot = repmat('*', 1, used);
+            end;
+
+            if notUsed > 0
+                waitQueueEmptySlot = repmat('-', 1, notUsed);
+            end;
+
+            out = sprintf('Wait Queue: [%s%s] \n', waitQueueUsedSlot, waitQueueEmptySlot);
+        end;
     end
 end
 
