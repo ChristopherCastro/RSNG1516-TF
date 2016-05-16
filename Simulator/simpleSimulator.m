@@ -1,6 +1,6 @@
 % Simulador básico con un único servidor y múltiples hilos.
 %
-function [threads] = simpleSimulator(nHilos, waitQueueLen, lQueue)
+function [threads,peticiones_rechazadas] = simpleSimulator(nHilos, waitQueueLen, lQueue)
     peticiones_rechazadas = 0;
     threads = Threads(nHilos, waitQueueLen);
     
