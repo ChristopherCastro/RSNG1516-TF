@@ -14,7 +14,7 @@ function [threads] = simpleSimulator(nHilos, waitQueueLen, lQueue)
                 % ya cambiaremos el nombre de la variable al ingles
             end;
         elseif e.tipo == 'S'
-            threads.moveHead(qIdx);
+            %threads.moveHead(qIdx);
         end;
     end;
 end
