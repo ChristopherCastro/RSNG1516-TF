@@ -17,8 +17,12 @@ end
 function [e, qIdx] = getEvent(lQueue, threads)
     qIdx = -1;
     l = struct('tllegada', inf);
-    t = l;    
-    
+    t = l;
+
+    if (mod(lQueue.size(), 1000) == 0)
+        fprintf('Done 1000, remaining: %d/%d. \n', lQueue.size(), length(lQueue.queue));
+    end;
+
     if lQueue.hasNext() 
         l = lQueue.first();
     end;
