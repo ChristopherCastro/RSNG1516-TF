@@ -5,7 +5,6 @@ function [threads] = simpleSimulator(nHilos, waitQueueLen, lQueue)
     
     while (lQueue.hasNext() || threads.hasNext())
         [e, qIdx] = getEvent(lQueue, threads);
-        disp(threads.toString());
 
         if e.tipo == 'L'
             if ~threads.isServerFull()

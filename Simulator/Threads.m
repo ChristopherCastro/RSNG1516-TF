@@ -49,7 +49,7 @@ classdef Threads < handle
             qIdx = 1;
             
             for q = 1:length(obj.queues)
-                queue = obj.queues{qIdx};
+                queue = obj.queues{q};
 
                 if queue.size() == 0
                     qIdx = q;
