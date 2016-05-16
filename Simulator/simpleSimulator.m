@@ -7,14 +7,9 @@ function [threads] = simpleSimulator(nHilos, waitQueueLen, lQueue)
         [e, qIdx] = getEvent(lQueue, threads);
 
         if e.tipo == 'L'
-            if ~threads.isServerFull()
-                threads.handle(e);
-            else
-                % No se puede atender -> rechazar
-                % ya cambiaremos el nombre de la variable al ingles
-            end;
+            threads.handle(e);
         elseif e.tipo == 'S'
-            threads.moveHead(qIdx);
+            %threads.moveHead(qIdx);
         end;
     end;
 end
