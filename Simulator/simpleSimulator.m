@@ -2,6 +2,7 @@
 %
 function [threads] = simpleSimulator(nHilos, waitQueueLen, lQueue)
     threads = Threads(nHilos, waitQueueLen);
+    stats = Stats();
     
     while (lQueue.hasNext() || threads.hasNext())
         [e, qIdx] = getEvent(lQueue, threads);
@@ -9,7 +10,7 @@ function [threads] = simpleSimulator(nHilos, waitQueueLen, lQueue)
         if e.tipo == 'L'
             threads.handle(e);
         elseif e.tipo == 'S'
-            %threads.moveHead(qIdx);
+            stats.collect(threads, e);
         end;
     end;
 end
