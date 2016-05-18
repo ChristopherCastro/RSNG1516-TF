@@ -57,7 +57,7 @@ classdef eventsQueue < handle
         end;
 
         % Consula el primer elemento de la cola sin quitarlo ni avanzar la
-        % cabezade la misma.
+        % cabeza de la misma, es decir, el elemento apuntado por la cabeza.
         %
         % # Retorno:
         %

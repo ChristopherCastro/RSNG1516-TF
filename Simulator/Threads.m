@@ -108,36 +108,46 @@ classdef Threads < handle
         % {1}: El server esta lleno, asi que la petición rechazada
         % {0}: Cualquier otro caso
         function [i] = isServerFull(obj)
-            s = 0;
-
-            for q = 1:length(obj.queues)
-                s = s + obj.queues{q}.size();
-            end;
-
-            i = (s - length(obj.queues)) >= obj.wqLen;
+            i = obj.countClientsInServer() >= obj.wqLen;
         end;
         
-        % Retorna una representción tipo texto de los hilos
-        function [out] = toString(obj)
-            s = 0;
+        % Cuenta el número de clientes dentro del servidor, es decir, la
+        % suma aquellos que están siendo atendidos por alguno de los hilos
+        % y aquellos en la cola de espera.
+        %
+        % # Retorno:
+        %
+        % Un entero mayor o igual a cero.
+        function [s] = countClientsInServer(obj)
+            s = obj.countBusyThreads() + obj.countClientsWaiting();
+        end;
+
+        % Cuenta el número de hilos actualmente ocupados.
+        %
+        % # Retorno:
+        %
+        % Un entero mayor o igual a cero.
+        function [b] = countBusyThreads(obj)
+            b = 0;
+
             for q = 1:length(obj.queues)
-                s = s + obj.queues{q}.size();
+                if obj.queues{q}.size() > 0
+                    b = b + 1;
+                end;
             end;
-            
-            used = (s - length(obj.queues));
-            notUsed = obj.wqLen - (s - length(obj.queues));
-            waitQueueUsedSlot = '';
-            waitQueueEmptySlot = '';
+        end;
 
-            if used > 0
-                waitQueueUsedSlot = repmat('*', 1, used);
+        % Cuenta el número de clientes esperando por alguno hilo para ser
+        % atendido.
+        %
+        % # Retorno:
+        %
+        % Un entero mayor o igual a cero.
+        function [w] = countClientsWaiting(obj)
+            w = 0;
+            for q = 1:length(obj.queues)
+                w = w + max(0, (obj.queues{q}.size() - 1));
             end;
-
-            if notUsed > 0
-                waitQueueEmptySlot = repmat('-', 1, notUsed);
-            end;
-
-            out = sprintf('Wait Queue: [%s%s] \n', waitQueueUsedSlot, waitQueueEmptySlot);
         end;
     end
 end
