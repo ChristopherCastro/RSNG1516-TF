@@ -1,22 +1,25 @@
 classdef Threads < handle
     properties
         % List of queues, one for each thread
-        queues = {};
+        queues;
+        nThreads = 0;
         
         % Wait queue length
         wqLen = 1;
         
         % Unhandled events due to overbooking
-        unhandled = [];
+        unhandled = []
     end
     
     methods
         % Constructor
         %
         function obj = Threads(nThreads, wqLen)
+            obj.nThreads = nThreads;
             obj.wqLen = wqLen;
-            for q = 1:nThreads
-                obj.queues{end + 1} = eventsQueue();
+
+            for q = 1:obj.nThreads
+                obj.queues{q} = eventsQueue();
             end;   
         end;
 
@@ -66,22 +69,23 @@ classdef Threads < handle
         %
         % # Retorno:
         %
-        % 1 Si ha atendido la petición, 0 si el evento no puedo ser
+        % 1 Si ha atendido la petición, 0 si el evento no puede ser
         % atendido.
         function [success] = handle(obj, lEvent)
             success = 0;
 
-            if ~obj.isServerFull()
+            if obj.isServerFull() == 0
                 success = 1;
                 lEvent.tipo = 'S';
-                tllegada = lEvent.tllegada;
+                tllegada = inf;
                 qIdx = 1;
 
-                for q = 1:length(obj.queues)
+                for q = 1:obj.nThreads
                     queue = obj.queues{q};
 
                     if queue.size() == 0
                         qIdx = q;
+                        tllegada = lEvent.tllegada;
                         break;
                     elseif queue.last().tllegada < tllegada
                         tllegada = queue.last().tllegada;
@@ -89,6 +93,7 @@ classdef Threads < handle
                     end;
                 end;
 
+                lEvent.tServidor = tllegada;
                 lEvent.tllegada = lEvent.tservicio + tllegada;
                 obj.queues{qIdx}.add(lEvent);
             else
@@ -108,7 +113,7 @@ classdef Threads < handle
         % {1}: El server esta lleno, asi que la petición rechazada
         % {0}: Cualquier otro caso
         function [i] = isServerFull(obj)
-            i = obj.countClientsInServer() >= obj.wqLen;
+            i = obj.countClientsInServer() == (obj.wqLen + obj.nThreads);
         end;
         
         % Cuenta el número de clientes dentro del servidor, es decir, la
@@ -119,7 +124,7 @@ classdef Threads < handle
         %
         % Un entero mayor o igual a cero.
         function [s] = countClientsInServer(obj)
-            s = obj.countBusyThreads() + obj.countClientsWaiting();
+            s = obj.countBusyThreads() + obj.countClientsWaiting();         
         end;
 
         % Cuenta el número de hilos actualmente ocupados.
@@ -138,14 +143,14 @@ classdef Threads < handle
         end;
 
         % Cuenta el número de clientes esperando por alguno hilo para ser
-        % atendido.
+        % atendido. Es decir, en cola.
         %
         % # Retorno:
         %
         % Un entero mayor o igual a cero.
         function [w] = countClientsWaiting(obj)
             w = 0;
-            for q = 1:length(obj.queues)
+            for q = 1:obj.nThreads
                 w = w + max(0, (obj.queues{q}.size() - 1));
             end;
         end;

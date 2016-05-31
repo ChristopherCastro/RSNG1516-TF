@@ -12,10 +12,12 @@ function [events] = generador_2(lambda, t, nmax, seed)
 
     events(1).idllegada = 1;
     events(1).tllegada = arrivals(1);
+    events(1).tEntradaSistema = arrivals(1);
 
     for i = 2:length(arrivals)
         events(i).idllegada = i;
         events(i).tllegada = events(i - 1).tllegada + arrivals(i);
+        events(i).tEntradaSistema = events(i).tllegada;
     end;
 end
 

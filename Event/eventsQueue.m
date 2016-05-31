@@ -81,7 +81,7 @@ classdef eventsQueue < handle
         % # Argumentos
         %
         % - {event}: Un nuevo evento
-        function add(obj, event)
+        function [] = add(obj, event)
             obj.queue = [obj.queue event];
         end;
     end
