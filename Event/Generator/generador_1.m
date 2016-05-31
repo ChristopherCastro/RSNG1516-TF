@@ -1,9 +1,10 @@
-function [events] = generador_1(lambda, tmedio, nmax, seed)
+function [salidas] = generador_1(lambda, tmedio, nmax, seed, M,type)
     %Genera nmax llegadas con tiempos entre llegadas exponenciales y una 
     %tasa de lambda llegadas por segundo y tiempos de servicio exponenciales con media tmedio.
     
-    if nargin == 4
-        rng(seed);
+    salidas = {};
+    for machine=1:M
+        salidas{machine}=[];
     end
     
     emptyEvent = event('L', 0, 0,0, [], [], []);
@@ -21,5 +22,19 @@ function [events] = generador_1(lambda, tmedio, nmax, seed)
         events(i).tEntradaSistema = events(i).tllegada;
         events(i).tservicio = exprnd(tmedio);
     end;
+    
+     for i=1:nmax
+        if type==0 %Random
+            machineID = randi([1 M]);
+        elseif type==1 %RR
+            machineID = mod(i,M) + 1;
+        else %Invalid
+            
+        end;
+        
+        machinesEvents = salidas{machineID};
+        machinesEvents = [machinesEvents events(i)];
+        salidas{machineID}=machinesEvents;
+    end
 end
 
