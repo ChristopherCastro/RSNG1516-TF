@@ -1,13 +1,27 @@
 addpath('Event/');
 addpath('Event/Generator');
 addpath('Simulator');
-clc
-clear
-M = 1; %Numero de máquinas
-loadBalancer=0; %Reparto de carga entre máquinas.
-        %0=Random
-        %1=RR
-        
+
+clc;
+clear;
+
+runSets = {
+    struct('M', 1, 'loadBalancer'),
+};
+
+% Numero de máquinas
+M = 1;
+
+% Reparto de carga entre máquinas:
+%
+% - 0: Random
+% - 1: RR
+loadBalancer = 0; 
+
+% Número de peticiones a simular
+numClients = 10000;
+
+
 machinesEvents = generador_1(0.1, 8, 3000, 12312, M, loadBalancer);
 
 stats = {};
