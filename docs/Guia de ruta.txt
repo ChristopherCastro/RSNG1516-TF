@@ -1,0 +1,96 @@
+Límites de calidad para todas las simulaciones segun el enunciado:
+	Que se rechacen menos del 5%. si es posible que se rechacen menos del 1%
+	Se esperan que esten en cola menos de 10-20 segundos
+	El balanceador de carga será por defecto aleatorio. 
+	Todas la petciones tienen tmedio=60segundos.
+
+
+
+
+Comprobar bajo alguna configuración arbitraria la coherencia con las formulas de M/M/n/n, osease, con tamaño de cola = 0
+
+########################################################################################################################
+
+
+PREGUNTAS BÁSICAS ############################################################
+
+	[1]¿Cual es el máximo número de peticiones por segundo que soportaremos con un único servidor con N hilos?
+		Probamos multiples configuraciones cambiando únicamente el numero de hilos N y el tamaño de la cola Q.
+		Comprobamos en cuáles de ellas se satura el servidor, en cuáles se cumple el 5% o menos de rechazo etc.
+
+	[2]¿Como será el tiempo de espera de las peticiones?
+		Graficamos los diversos tiempos de espera EN COLA en las anteriores multiples configuraciones.
+		Comprobamos en cuales de ellos se cumple el limite de espera inferior a 10-20 segundos.
+
+	[3]Suponiendo que una vez que empiece a enviarse el video practicamente se empieza a reproducir. ¿Como de probable es que se quede parado esperando?
+		Equivale a preguntar que probabilidad hay de que me metan en cola. De que tenga que esperar mas de 0 segundos.
+		No estoy seguro de esto... no estará preguntando por temas rollo buffering, no?
+
+
+
+
+
+
+PREGUNTAS AVANZADAS ############################################################
+	[4]¿Como influye el que los videos sean de tamaño constante en lugar de exponenciales?
+		Hacemos otros set de ejecuciones como en las básicas pero con el generador_2 y graficamos/comparamos resultados.
+
+	[5]¿Como cambia esto si tenemos M maquinas virtuales? 
+		Otro set de ejecuciones con M= 3, 5, 10 y 100
+		Ver como han variado las gráficas. Se espera 3 veces menos? Se termina de servir 3 veces mas rápido?
+		Qué implica este escalado horizontal?
+
+	[6]¿Es mejor aumentar el número de máquinas o aumentar los hilos de cada máquina?
+		Otro set de ejecuciones con M=1 pero con número de hilos N = 3, 5, 10 y 100
+
+	[7]Si el número de hilos tiene un límite por ejemplo 10 o 100, ¿Es mejor agotarlo antes de crear más máquinas?
+		No podemos simular la creación de máquinas rollo Just In Time, porque generamos y repartimos las petciones antes de ejecutar la simulación.
+		Creo que no podemos responder a esta pregunta.
+
+	[8]Si tenemos M máquinas virtuales, ¿Como influye que el reparto round-robin en lugar de aleatorio?
+		Mismo set de ejecuciones empleado en [5] para M=5 (por ejemplo) pero empleamos round-robin en vez de aleatorio.
+		Volver a graficar/comparar resultados entre ambos. Presentan diferencias en cuanto a numeor de hilos ociosos, tiempos
+		de espera, cantidad de rechazados etc?
+
+
+
+
+
+
+
+
+
+NUESTRAS PREGUNTAS ############################################################
+	[9]Escenario real: ¿Cuántos servidores de X características necesitariamos comprar para suplir el servicio al 80%, 90% y 99%?
+		"En despeñaperros se planea instaurar un servicio que recibira nosecuantas peticiones por segundo. Nuestro proveedor tecnológico solo dispone de servdiores nosequé características. Si nuestro servicio debe cumplir unos QoS de 80%, 90% y 99% cuántos servidores debemos comprar al proveedor?"
+		Llegan 116 clientes por segundo
+		Consumen 6.3 mb cada uno 
+
+		Características de servidores:
+			nhilos = 
+			tamaño cola = 
+
+
+
+			Aquí simplemente hariamos simulaciones con las caractersiticas descritas en el enunciado hasta obtener esos porcenatajes
+			de clientes atendidos con éxito.
+
+
+
+	[10]Sobre balanceo de carga...
+	Si distinguiesemos entre peticiones pesadas (videos de más de 60 segundos) y ligeras (de 60 segundos o menos), ¿Qué sería mas efectivo?
+	Enviar las ligeras a una máquina con muchos hilos y poca cola y las pesadas a uno con pocos hilos y mucha cola. ¿O viceversa?
+
+
+	[11]Dada una máquina de ciertas características. Comprobar cuantas peticiones puede aceptar por segundo sin superar cierto umbral
+	de porcentaje de rechazos.
+
+
+
+
+
+
+
+
+
+
