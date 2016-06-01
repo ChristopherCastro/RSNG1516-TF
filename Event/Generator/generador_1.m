@@ -28,6 +28,12 @@ function [salidas] = generador_1(lambda, tmedio, nmax, seed, M,type)
             machineID = randi([1 M]);
         elseif type==1 %RR
             machineID = mod(i,M) + 1;
+        elseif type==2 %Según tamaño, solo para 2 máquinas
+            if events(i).tservicio>tmedio %petición pesada
+                machineID=1;
+            else %petición ligera
+                machineID=2;
+            end
         else %Invalid
             
         end;
