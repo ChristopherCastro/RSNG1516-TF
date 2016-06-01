@@ -10,6 +10,7 @@ classdef Stats < handle
         tWaitSystem = [];
         tMeanWaitSystem = [];
         countRejected = [];
+        ro = [];
     end
     
     methods
@@ -28,7 +29,8 @@ classdef Stats < handle
                 obj.tMeanWaitQueue(end+1) = mean(obj.tWaitQueue);
                 obj.tMeanWaitSystem(end+1) = mean(obj.tWaitSystem);
             end
-            obj.countRejected(end+1) = length(threads.unhandled);       
+            obj.countRejected(end+1) = length(threads.unhandled);
+            obj.ro(end+1) = (threads.countBusyThreads()+threads.countClientsWaiting())/(threads.nThreads+threads.wqLen);
         end
     end
     
