@@ -10,7 +10,9 @@ classdef Stats < handle
         tWaitSystem = [];
         tMeanWaitSystem = [];
         countRejected = [];
+        percentRejected = [];
         ro = [];
+        roMean = [];
     end
     
     methods
@@ -30,7 +32,10 @@ classdef Stats < handle
                 obj.tMeanWaitSystem(end+1) = mean(obj.tWaitSystem);
             end
             obj.countRejected(end+1) = length(threads.unhandled);
-            obj.ro(end+1) = (threads.countBusyThreads()+threads.countClientsWaiting())/(threads.nThreads+threads.wqLen);
+            obj.percentRejected(end+1) = length(threads.unhandled)/(length(threads.unhandled)+length(obj.time));
+            obj.ro(end+1) = threads.countClientsInServer()/(threads.nThreads+threads.wqLen); %TODO: Fix this
+            obj.roMean(end+1) = mean(obj.ro);
+            
         end
     end
     
