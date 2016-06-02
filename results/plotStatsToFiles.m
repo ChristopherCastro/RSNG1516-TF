@@ -13,7 +13,7 @@ if exist('runSetsResults','var')
         else
             runSetStats = runSet{2};
             %Fill 10-M empty machines stats to plot nothing
-            for j=(runSetConf.machinesNumber+1):10
+            for j=(runSetConf.machinesNumber):10
                 runSetStats{j} = Stats();
             end
     %         fprintf('==========================\n');
