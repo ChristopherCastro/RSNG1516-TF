@@ -1,4 +1,4 @@
-function [salidas] = generador_1(lambda, tmedio, nmax, seed, M,type)
+function [salidas] = generador_1(lambda, tmedio, nmax, seed, M, type)
     %Genera nmax llegadas con tiempos entre llegadas exponenciales y una 
     %tasa de lambda llegadas por segundo y tiempos de servicio exponenciales con media tmedio.
     
