@@ -11,14 +11,15 @@ classdef Stats < handle
         tMeanWaitSystem = [];
         countRejected = [];
         percentRejected = [];
+        lambda = [];
+        mu = [];
         ro = [];
-        roMean = [];
     end
     
     methods
         
         function collect(obj, threads,e)
-            obj.time(end+1) = e.tllegada;
+            obj.time(end + 1) = e.tllegada;
             obj.countClientsInServer(end+1) = threads.countClientsInServer();
             obj.countClientsWaiting(end+1) = threads.countClientsWaiting();
             obj.countBusyThreads(end+1) = threads.countBusyThreads();
@@ -33,9 +34,10 @@ classdef Stats < handle
             end
             obj.countRejected(end+1) = length(threads.unhandled);
             obj.percentRejected(end+1) = length(threads.unhandled)/(length(threads.unhandled)+length(obj.time));
-            obj.ro(end+1) = threads.countClientsInServer()/(threads.nThreads+threads.wqLen); %TODO: Fix this
-            obj.roMean(end+1) = mean(obj.ro);
-            
+
+            obj.lambda(end + 1) = e.idllegada / e.tllegada;
+            obj.mu(end + 1) = length(obj.time) / e.tllegada;
+            obj.ro(end + 1) = obj.lambda(end) / obj.mu(end);
         end
     end
     
