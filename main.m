@@ -61,14 +61,14 @@ for rIdx = 1:length(runSets)
 
     if runSet.loadBalancer == 2 %if 2 machines and load balancer type 2 .
         eventsQ = eventsQueue(machinesEvents{1, 1});
-        enviromentStats{1} = simpleSimulator(runSet.nThreads, runSet.waitQueueLen, eventsQ);
+        enviromentStats{1} = MachineSimulator(runSet.nThreads, runSet.waitQueueLen, eventsQ);
         eventsQ = eventsQueue(machinesEvents{1, 2});
         %Machine 2 inverts nThreads<->waitQueueLen
-        enviromentStats{2} = simpleSimulator(runSet.waitQueueLen, runSet.nThreads, eventsQ);
+        enviromentStats{2} = MachineSimulator(runSet.waitQueueLen, runSet.nThreads, eventsQ);
     else %normal execution
         for machineId = 1:runSet.machinesNumber
             eventsQ = eventsQueue(machinesEvents{1, machineId});
-            enviromentStats{machineId} = simpleSimulator(runSet.nThreads, runSet.waitQueueLen, eventsQ);
+            enviromentStats{machineId} = MachineSimulator(runSet.nThreads, runSet.waitQueueLen, eventsQ);
         end;
     end
 

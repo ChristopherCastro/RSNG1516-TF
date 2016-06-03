@@ -1,12 +1,11 @@
 % Simulador básico con un único servidor y múltiples hilos.
 %
-function [stats] = simpleSimulator(nHilos, waitQueueLen, lQueue)
+function [stats] = MachineSimulator(nHilos, waitQueueLen, lQueue)
     threads = Threads(nHilos, waitQueueLen);
-    stats = Stats();
-    
-    while (lQueue.hasNext() || threads.hasNext())
-        [e, qIdx] = getEvent(lQueue, threads, stats);
+    stats = StatsCollector();
 
+    while (lQueue.hasNext() || threads.hasNext())
+        e = getEvent(lQueue, threads, stats);
         if e.tipo == 'L'
             threads.handle(e);
         elseif e.tipo == 'S'
@@ -14,7 +13,7 @@ function [stats] = simpleSimulator(nHilos, waitQueueLen, lQueue)
     end;
 end
 
-function [e, qIdx] = getEvent(lQueue, threads,stats)
+function [e] = getEvent(lQueue, threads, stats)
     qIdx = -1;
     l = struct('tllegada', inf);
     t = l;

@@ -1,4 +1,4 @@
-classdef Stats < handle
+classdef StatsCollector < handle
     
     properties
         time = [];
@@ -18,7 +18,6 @@ classdef Stats < handle
     end
     
     methods
-        
         function collect(obj, threads,e)
             obj.time(end + 1) = e.tllegada;
             obj.countClientsInServer(end + 1) = threads.countClientsInServer();
