@@ -34,8 +34,8 @@ function [e, qIdx] = getEvent(lQueue, threads,stats)
     if (l.tllegada < t.tllegada)
         e = lQueue.next();
     else
-        stats.collect(threads, t);
         threads.moveHead(qIdx);
+        stats.collect(threads, t);
         e = t;
     end;
 end
