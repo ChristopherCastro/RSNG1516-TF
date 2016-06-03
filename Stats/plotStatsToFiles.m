@@ -14,7 +14,7 @@ if exist('runSetsResults','var')
             runSetStats = runSet{2};
             %Fill 10-M empty machines stats to plot nothing
             for j=(runSetConf.machinesNumber+1):10
-                runSetStats{j} = Stats();
+                runSetStats{j} = StatsCollector();
             end
     %         fprintf('==========================\n');
             fprintf('Plotting runSet %d\n', i);

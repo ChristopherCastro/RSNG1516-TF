@@ -1,6 +1,7 @@
 addpath('Event/');
 addpath('Event/Generator');
-addpath('Simulator');
+addpath('Machine');
+addpath('Stats');
 
 clc;
 clear;
@@ -31,7 +32,7 @@ runSets = {
 % struct('eventsGenerator', 1, 'lambda', 1, 'tmService', 2, 'nThreads', 3, 'waitQueueLen', 50, 'machinesNumber', 3, 'loadBalancer', 1, 'numClients', 5000), ...
 % struct('eventsGenerator', 1, 'lambda', 1, 'tmService', 2, 'nThreads', 3, 'waitQueueLen', 6000, 'machinesNumber', 3, 'loadBalancer', 1, 'numClients', 5000), ...
 % struct('eventsGenerator', 1, 'lambda', 1, 'tmService', 2, 'nThreads', 5, 'waitQueueLen', 0, 'machinesNumber', 3, 'loadBalancer', 1, 'numClients', 5000), ...
-  struct('eventsGenerator', 1, 'lambda', 15, 'tmService', 0.05, 'nThreads', 1, 'waitQueueLen', 10000, 'machinesNumber', 1, 'loadBalancer', 0, 'numClients', 10000)
+  struct('eventsGenerator', 1, 'lambda', 15, 'tmService', 0.05, 'nThreads', 1, 'waitQueueLen', 1000, 'machinesNumber', 1, 'loadBalancer', 0, 'numClients', 1000)
 % struct('eventsGenerator', 1, 'lambda', 1, 'tmService', 3, 'nThreads', 5, 'waitQueueLen', 10, 'machinesNumber', 3, 'loadBalancer', 2, 'numClients', 1000)
 };
 
@@ -58,17 +59,19 @@ for rIdx = 1:length(runSets)
         machinesEvents = generador_2(runSet.lambda, runSet.tmService, runSet.numClients, seed, runSet.machinesNumber, runSet.loadBalancer);
     end;
 
-
     if runSet.loadBalancer == 2 %if 2 machines and load balancer type 2 .
         eventsQ = eventsQueue(machinesEvents{1, 1});
-        enviromentStats{1} = MachineSimulator(runSet.nThreads, runSet.waitQueueLen, eventsQ);
+        machine = MachineSimulator(runSet.nThreads, runSet.waitQueueLen, eventsQ);
+        enviromentStats{1} = machine.run();
+
         eventsQ = eventsQueue(machinesEvents{1, 2});
-        %Machine 2 inverts nThreads<->waitQueueLen
-        enviromentStats{2} = MachineSimulator(runSet.waitQueueLen, runSet.nThreads, eventsQ);
-    else %normal execution
+        machine = MachineSimulator(runSet.waitQueueLen, runSet.nThreads, eventsQ);
+        enviromentStats{2} = machine.run();
+    else
         for machineId = 1:runSet.machinesNumber
             eventsQ = eventsQueue(machinesEvents{1, machineId});
-            enviromentStats{machineId} = MachineSimulator(runSet.nThreads, runSet.waitQueueLen, eventsQ);
+            machine = MachineSimulator(runSet.nThreads, runSet.waitQueueLen, eventsQ);
+            enviromentStats{machineId} = machine.run();
         end;
     end
 

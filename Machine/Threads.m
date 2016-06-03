@@ -22,7 +22,7 @@ classdef Threads < handle
             obj.nThreads = nThreads;
             obj.wqLen = wqLen;
 
-            for q = 1:obj.nThreads
+            for q = 1:nThreads
                 obj.queues{q} = eventsQueue();
             end;   
         end;
