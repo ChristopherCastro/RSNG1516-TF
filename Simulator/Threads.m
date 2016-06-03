@@ -14,7 +14,11 @@ classdef Threads < handle
     methods
         % Constructor
         %
-        function obj = Threads(nThreads, wqLen)
+        function obj = Threads(nThreads, wqLen)         
+            if isinf(wqLen)
+                wqLen = intmax;
+            end;
+
             obj.nThreads = nThreads;
             obj.wqLen = wqLen;
 
