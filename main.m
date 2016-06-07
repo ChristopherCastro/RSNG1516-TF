@@ -9,9 +9,22 @@ seed = 89492162;
 
 runSets = {
     %2016 06 06 Marco teórico Diapositiva 1
-  %struct('eventsGenerator', 1, 'lambda', 15, 'tmService', 0.05, 'nThreads', 1, 'waitQueueLen', Inf, 'machinesNumber', 1, 'loadBalancer', 0, 'numClients', 20000)
+    %struct('eventsGenerator', 1, 'lambda', 15, 'tmService', 0.05, 'nThreads', 1, 'waitQueueLen', Inf, 'machinesNumber', 1, 'loadBalancer', 0, 'numClients', 20000)
+    
     %2016 06 06 Marco teórico Diapositiva 2  
-    struct('eventsGenerator', 1, 'lambda', 550, 'tmService', 0.008, 'nThreads', 1, 'waitQueueLen', Inf, 'machinesNumber', 4, 'loadBalancer', 0, 'numClients', 15000)
+    %struct('eventsGenerator', 1, 'lambda', 550, 'tmService', 0.008, 'nThreads', 1, 'waitQueueLen', Inf, 'machinesNumber', 4, 'loadBalancer', 0, 'numClients', 15000)
+    
+    %2016 06 07 Pregunta 1 - ¿Cuál es el máximo número de peticiones por segundo que soportaremos con un único servidor con N hilos?
+    %struct('eventsGenerator', 1, 'lambda', 0.00083, 'tmService', 60, 'nThreads', 1, 'waitQueueLen', 0, 'machinesNumber', 1, 'loadBalancer', 0, 'numClients', 20000),...
+    %struct('eventsGenerator', 1, 'lambda', 0.0368, 'tmService', 60, 'nThreads', 5, 'waitQueueLen', 0, 'machinesNumber', 1, 'loadBalancer', 0, 'numClients', 20000),...
+    %struct('eventsGenerator', 1, 'lambda', 0.1032, 'tmService', 60, 'nThreads', 10, 'waitQueueLen', 0, 'machinesNumber', 1, 'loadBalancer', 0, 'numClients', 20000),...
+    %struct('eventsGenerator', 1, 'lambda', 0.7392, 'tmService', 60, 'nThreads', 50, 'waitQueueLen', 0, 'machinesNumber', 1, 'loadBalancer', 0, 'numClients', 20000)
+    %struct('eventsGenerator', 1, 'lambda', 0.070, 'tmService', 60, 'nThreads', 5, 'waitQueueLen', 5, 'machinesNumber', 1, 'loadBalancer', 0, 'numClients', 2000)
+    
+    %Pregunta Balanceadores de carga
+    
+    %Demand Based
+    struct('eventsGenerator', 1, 'lambda', 1, 'tmService', 60, 'nThreads', 30, 'waitQueueLen', 50, 'machinesNumber', 2, 'loadBalancer', 2, 'numClients', 5000)
 };
 
 runSetsResults = {};
