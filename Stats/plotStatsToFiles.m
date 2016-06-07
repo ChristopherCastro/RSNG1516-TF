@@ -57,7 +57,12 @@ if exist('runSetsResults','var')
             title(topLeft,'Numero medio de clientes en cola');
             xlabel(topLeft,'tiempo');
             ylabel(topLeft,'clientes en cola');
-
+            for j=1:10
+                if ~isempty(runSetStats{j}.time())
+                    text(runSetStats{j}.time(end),runSetStats{j}.countMeanClientsWaiting(end),num2str(runSetStats{j}.countMeanClientsWaiting(end)),'Parent', topLeft);
+                end
+            end
+            
             % Evolución del tiempo medio de espera en la cola
             plot(topRight,runSetStats{1}.time, runSetStats{1}.tMeanWaitQueue,...
                 runSetStats{2}.time, runSetStats{2}.tMeanWaitQueue,...
@@ -72,7 +77,15 @@ if exist('runSetsResults','var')
             title(topRight,'Tiempo medio espera en cola');
             xlabel(topRight,'tiempo');
             ylabel(topRight,'tMeanWaitQueue');
-
+            xlabel(topLeft,'tiempo');
+            ylabel(topLeft,'clientes en cola');
+            for j=1:10
+                if ~isempty(runSetStats{j}.time())
+                    text(runSetStats{j}.time(end),runSetStats{j}.tMeanWaitQueue(end),num2str(runSetStats{j}.tMeanWaitQueue(end)),'Parent', topRight);
+                end
+            end
+            
+            
             % Ratio rechazados
             plot(bottomLeft,runSetStats{1}.time, runSetStats{1}.percentRejected,...
                 runSetStats{2}.time, runSetStats{2}.percentRejected,...
@@ -87,22 +100,33 @@ if exist('runSetsResults','var')
             title(bottomLeft,'% rechazos');
             xlabel(bottomLeft,'tiempo');
             ylabel(bottomLeft,'porcentaje rechazos');
+            for j=1:10
+                if ~isempty(runSetStats{j}.time())
+                    text(runSetStats{j}.time(end),runSetStats{j}.percentRejected(end),num2str(runSetStats{j}.percentRejected(end)),'Parent', bottomLeft);
+                end
+            end
 
+            
+            
             % Evolucion de ro en cada máquina
-            plot(bottomRight,runSetStats{1}.time, runSetStats{1}.ro,...
-                runSetStats{2}.time, runSetStats{2}.ro,...
-                runSetStats{3}.time, runSetStats{3}.ro,...
-                runSetStats{4}.time, runSetStats{4}.ro,...
-                runSetStats{5}.time, runSetStats{5}.ro,...
-                runSetStats{6}.time, runSetStats{6}.ro,...
-                runSetStats{7}.time, runSetStats{7}.ro,...
-                runSetStats{8}.time, runSetStats{8}.ro,...
-                runSetStats{9}.time, runSetStats{9}.ro,...
-                runSetStats{10}.time, runSetStats{10}.ro);
+            plot(bottomRight,runSetStats{1}.time, runSetStats{1}.meanRhoMM1,...
+                runSetStats{2}.time, runSetStats{2}.meanRhoMM1,...
+                runSetStats{3}.time, runSetStats{3}.meanRhoMM1,...
+                runSetStats{4}.time, runSetStats{4}.meanRhoMM1,...
+                runSetStats{5}.time, runSetStats{5}.meanRhoMM1,...
+                runSetStats{6}.time, runSetStats{6}.meanRhoMM1,...
+                runSetStats{7}.time, runSetStats{7}.meanRhoMM1,...
+                runSetStats{8}.time, runSetStats{8}.meanRhoMM1,...
+                runSetStats{9}.time, runSetStats{9}.meanRhoMM1,...
+                runSetStats{10}.time, runSetStats{10}.meanRhoMM1);
             title(bottomRight,'Rho medio');
             xlabel(bottomRight,'tiempo');
             ylabel(bottomRight,'Rho medio');
-            
+            for j=1:10
+                if ~isempty(runSetStats{j}.time())
+                    text(runSetStats{j}.time(end),runSetStats{j}.meanRhoMM1(end),num2str(runSetStats{j}.meanRhoMM1(end)),'Parent', bottomRight);
+                end
+            end
 
             %saveas(FigHandle,baseFileName);
             print(baseFileName,'-dpng','-r0')

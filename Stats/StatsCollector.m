@@ -14,7 +14,10 @@ classdef StatsCollector < handle
         percentRejected = [];
         lambda = [];
         mu = [];
-        ro = [];
+        rhoMM1 = []; %Empty server based rho
+        meanRhoMM1 = [];
+        rhoResources = []; %Resources based rho.
+        meanRhoResources = [];
     end
     
     methods
@@ -38,7 +41,10 @@ classdef StatsCollector < handle
 
             obj.lambda(end + 1) = e.idllegada / e.tllegada;
             obj.mu(end + 1) = length(obj.time) / e.tllegada;
-            obj.ro(end + 1) = obj.lambda(end) / obj.mu(end);
+            obj.rhoMM1(end + 1) = 1-sum(obj.countClientsInServer==0)/length(obj.countClientsInServer);
+            obj.meanRhoMM1(end+1) = mean(obj.rhoMM1);
+            obj.rhoResources(end+1) = threads.countClientsInServer()/(threads.nThreads+threads.wqLen);
+            obj.meanRhoResources(end+1) = mean(obj.rhoResources);
         end
     end
     
