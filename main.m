@@ -26,8 +26,8 @@ runSets = {
     
     %Pregunta Balanceadores de carga
     %Demand Based
-    struct('eventsGenerator', 1, 'lambda', 1, 'tmService', 60, 'nThreads', 20, 'waitQueueLen', 40, 'machinesNumber', 2, 'loadBalancer', 2, 'numClients', 15000),...
-    struct('eventsGenerator', 1, 'lambda', 1, 'tmService', 60, 'nThreads', 40, 'waitQueueLen', 40, 'machinesNumber', 2, 'loadBalancer', 2, 'numClients', 15000)
+    struct('eventsGenerator', 1, 'lambda', 1, 'tmService', 60, 'nThreads', 20, 'waitQueueLen', 100, 'machinesNumber', 3, 'loadBalancer', 0, 'numClients', 20000),...
+    struct('eventsGenerator', 1, 'lambda', 1, 'tmService', 60, 'nThreads', 20, 'waitQueueLen', 100, 'machinesNumber', 3, 'loadBalancer', 1, 'numClients', 20000)
     
     %Aumentar máquinas VS aumentar hilos
     %struct('eventsGenerator', 1, 'lambda', 0.1, 'tmService', 60,'nThreads', 5, 'waitQueueLen', 10, 'machinesNumber', 1,'loadBalancer', 0, 'numClients', 20000),...
@@ -47,6 +47,7 @@ numClients = 10000;
 runSetsResults = {};
 
 for rIdx = 1:length(runSets)
+    rng(seed);
     runSet = runSets{rIdx};
     enviromentStats = {};
     
@@ -84,7 +85,7 @@ for rIdx = 1:length(runSets)
     end
 
     runSetsResults{end + 1} = {runSet enviromentStats};
-    fprintf('\nFinishing Eviroment! (%d/%d)\n\n', rIdx, length(runSets));
+    fprintf('\nFinishing Enviroment! (%d/%d)\n\n', rIdx, length(runSets));
 end
 
 
