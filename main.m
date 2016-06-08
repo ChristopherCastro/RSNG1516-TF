@@ -6,7 +6,7 @@ addpath('Stats');
 clc;
 clear;
 seed = 89492162;
-
+rng(seed);
 runSets = {
     %2016 06 06 Marco teórico Diapositiva 1
     %struct('eventsGenerator', 1, 'lambda', 15, 'tmService', 0.05, 'nThreads', 1, 'waitQueueLen', Inf, 'machinesNumber', 1, 'loadBalancer', 0, 'numClients', 20000)
@@ -26,12 +26,12 @@ runSets = {
     
     %Pregunta Balanceadores de carga
     %Demand Based
-    %struct('eventsGenerator', 1, 'lambda', 1, 'tmService', 60, 'nThreads', 5, 'waitQueueLen', 10, 'machinesNumber', 2, 'loadBalancer', 2, 'numClients', 5000)
+    struct('eventsGenerator', 1, 'lambda', 1, 'tmService', 60, 'nThreads', 30, 'waitQueueLen', 50, 'machinesNumber', 2, 'loadBalancer', 2, 'numClients', 5000)
     
     
     %Aumentar máquinas VS aumentar hilos
-    struct('eventsGenerator', 1, 'lambda', 0.1, 'tmService', 60,'nThreads', 5, 'waitQueueLen', 10, 'machinesNumber', 1,'loadBalancer', 0, 'numClients', 20000),...
-    struct('eventsGenerator', 1, 'lambda', 0.1, 'tmService', 60, 'nThreads', 1, 'waitQueueLen', 10, 'machinesNumber', 5, 'loadBalancer', 0, 'numClients', 20000)
+    %struct('eventsGenerator', 1, 'lambda', 0.1, 'tmService', 60,'nThreads', 5, 'waitQueueLen', 10, 'machinesNumber', 1,'loadBalancer', 0, 'numClients', 20000),...
+    %struct('eventsGenerator', 1, 'lambda', 0.1, 'tmService', 60, 'nThreads', 1, 'waitQueueLen', 10, 'machinesNumber', 5, 'loadBalancer', 0, 'numClients', 20000)
 };
 
 runSetsResults = {};

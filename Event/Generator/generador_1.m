@@ -1,7 +1,7 @@
 function [salidas] = generador_1(lambda, tmedio, nmax, seed, M, type)
     %Genera nmax llegadas con tiempos entre llegadas exponenciales y una 
     %tasa de lambda llegadas por segundo y tiempos de servicio exponenciales con media tmedio.
-    
+    rng(seed);
     salidas = {};
     for machine=1:M
         salidas{machine}=[];
@@ -29,7 +29,7 @@ function [salidas] = generador_1(lambda, tmedio, nmax, seed, M, type)
         elseif type==1 %RR
             machineID = mod(i,M) + 1;
         elseif type==2 %Según tamaño, solo para 2 máquinas
-            if events(i).tservicio>tmedio %petición pesada
+            if events(i).tservicio>80 %petición pesada
                 machineID=1;
             else %petición ligera
                 machineID=2;

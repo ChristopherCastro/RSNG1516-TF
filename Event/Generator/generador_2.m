@@ -1,7 +1,7 @@
 function [salidas] = generador_2(lambda, t, nmax, seed, M, type)
     % Genera nmax llegadas con tiempos entre llegadas exponenciales y una
     % tasa de lambda llegadas por segundo y tiempos de servicio constantes t
-    
+    rng(seed);
     salidas = {};
     for machine=1:M
         salidas{machine}=[];
