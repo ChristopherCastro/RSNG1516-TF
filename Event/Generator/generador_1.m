@@ -29,7 +29,7 @@ function [salidas] = generador_1(lambda, tmedio, nmax, seed, M, type)
         elseif type==1 %RR
             machineID = mod(i,M) + 1;
         elseif type==2 %Según tamaño, solo para 2 máquinas
-            if events(i).tservicio>80 %petición pesada
+            if events(i).tservicio>135%petición pesada
                 machineID=1;
             else %petición ligera
                 machineID=2;

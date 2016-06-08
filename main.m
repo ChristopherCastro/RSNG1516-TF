@@ -26,13 +26,23 @@ runSets = {
     
     %Pregunta Balanceadores de carga
     %Demand Based
-    struct('eventsGenerator', 1, 'lambda', 1, 'tmService', 60, 'nThreads', 30, 'waitQueueLen', 50, 'machinesNumber', 2, 'loadBalancer', 2, 'numClients', 5000)
-    
+    struct('eventsGenerator', 1, 'lambda', 1, 'tmService', 60, 'nThreads', 20, 'waitQueueLen', 40, 'machinesNumber', 2, 'loadBalancer', 2, 'numClients', 15000),...
+    struct('eventsGenerator', 1, 'lambda', 1, 'tmService', 60, 'nThreads', 40, 'waitQueueLen', 40, 'machinesNumber', 2, 'loadBalancer', 2, 'numClients', 15000)
     
     %Aumentar máquinas VS aumentar hilos
     %struct('eventsGenerator', 1, 'lambda', 0.1, 'tmService', 60,'nThreads', 5, 'waitQueueLen', 10, 'machinesNumber', 1,'loadBalancer', 0, 'numClients', 20000),...
     %struct('eventsGenerator', 1, 'lambda', 0.1, 'tmService', 60, 'nThreads', 1, 'waitQueueLen', 10, 'machinesNumber', 5, 'loadBalancer', 0, 'numClients', 20000)
+    
 };
+
+%MacroLote
+eventsGenerator = [1 2];
+lambda = [0,005 0,05 0,5 1 1,05];
+nThreads = [1 5 10 50];
+waitQueuelen = [0 10 50];
+machinesNumber = [1 2];
+loadBalancer = [0 1 2];
+numClients = 10000;
 
 runSetsResults = {};
 
